@@ -136,7 +136,8 @@ sub time_to_terminate {
         ($MTT::Globals::Values->{min_disk_free} ne "0")) {
         my $c = MTT::DoCommand::cwd();
         my $min_disk_free;
-        $df_handle->df();
+#        $df_handle->df();
+
 
         # compute min_disk_free *of this partition* in bytes if it was
         # specified as a percentage
