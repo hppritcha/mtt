@@ -250,9 +250,9 @@ testDef.openLogger()
 testDef.configTest()
 
 # Determine executor to use
-if (testDef.options['executor'] == "sequential" or testDef.options['executor'] == "Sequential"):
+if (testDef.config.get("MTTDefaults","executor") == "sequential" or testDef.config.get("MTTDefaults","executor") == "Sequential"):
     testDef.executeTest()
-elif (testDef.options['executor']== "combinatorial" or testDef.options['executor'] == "Combinatorial"):
+elif (testDef.config.get("MTTDefaults","executor")== "combinatorial" or testDef.config.get("MTTDefaults","executor") == "Combinatorial"):
     testDef.executeCombinatorial()
 else:
     print("Specified executor ", testDef.args.executor, " not found!")
