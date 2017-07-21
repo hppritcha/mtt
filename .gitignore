@@ -3,3 +3,6 @@ server/mtt_config.php
 server/php/stats/mtt-contrib.pdf
 server/php/tmp/*.csv
 server/php/tmp/*.png
+v2.x.o*
+v3.x.o*
+nightly.o*

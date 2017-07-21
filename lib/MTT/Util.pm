@@ -136,6 +136,8 @@ sub time_to_terminate {
         ($MTT::Globals::Values->{min_disk_free} ne "0")) {
         my $c = MTT::DoCommand::cwd();
         my $min_disk_free;
+        printf("Hey I'm here min_disk_free = %d\n", $MTT::Globals::Values->{min_disk_free});
+
         $df_handle->df();
 
         # compute min_disk_free *of this partition* in bytes if it was
