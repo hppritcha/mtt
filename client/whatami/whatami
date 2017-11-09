@@ -181,6 +181,9 @@ get_linux_type()
                 x86_64)
                         hardware=x86_64
                         ;;
+                aarch64)
+                        hardware=aarch64
+                        ;;
                 *)
                         hardware=unknown_hardware_please_send_us_a_patch
                         ;;
@@ -229,7 +232,7 @@ get_linux_type()
                         distro_version="${VERSION}"
                         distro=${distro_brand}_${distro_version}
 
-                elif [ -f /etc/redhat-release -a -n "`egrep 'Red Hat Enterprise Linux ([a-zA-Z]+) release [0-9]*' /etc/redhat-release`" ]; then
+                elif [ -f /etc/redhat-release ] && [ -n "`egrep 'Red Hat Enterprise Linux ([a-zA-Z]+) release [0-9]*' /etc/redhat-release`" ]; then
                         distro_brand=rhel
                         distro_version=`grep 'Red Hat' /etc/redhat-release | sed -e 's/Red Hat Enterprise Linux \([a-zA-Z]*\) release \([0-9]*\).*/\2/' `
                         distro=${distro_brand}${distro_version}
@@ -306,6 +309,9 @@ get_linux_type()
                         distro=suse_10.2
 
                 elif [ -n "`egrep 'SUSE 10\.3' /etc/issue`" ]; then
+                        distro=suse_10.3
+
+                elif [ -n "`egrep 'SUSE Leap 42\.2' /etc/issue`" ]; then
                         distro=suse_10.3
 
                 elif [ -n "`egrep 'Tao Linux release 1 ' /etc/issue`" ]; then

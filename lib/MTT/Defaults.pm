@@ -33,10 +33,6 @@ our $System_config = {
         wget => { 
             command => [ "wget --no-check-certificate -nv \$url", "wget -nv \$url" ], 
             auth => "--user=\$username --password=\$password",
-        },
-        curl => {
-            command => [ "curl -# -# \$url -o \$outfile" ],
-            auth => "--user \$username:\$password",
         }
     },
 
