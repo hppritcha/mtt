@@ -14,6 +14,6 @@ export PERL_LWP_SSL_VERIFY_HOSTNAME=0
 
 cd /cray/css/users/n17276/mtt
 module list
-timeout 260m client/mtt --file ompi-tiger-nightly.ini --mpi-get --mpi-install --test-get --test-build --test-run  --verbose
+timeout 260m client/mtt --file ompi-tiger-nightly.ini --mpi-get --mpi-install --test-get --test-build --test-run  --verbose --force
 sbatch --begin=02:10 -N 4 --ntasks=64  --exclusive --time=300:00 --job-name ompi-master /cray/css/users/n17276/mtt/tiger_nightly_script.sh
 
