@@ -17,6 +17,7 @@ import os
 import datetime
 from BaseMTTUtility import *
 import json
+import os
 import pickle
 
 ## @addtogroup Utilities
@@ -207,7 +208,6 @@ class Logger(BaseMTTUtility):
                 pass
         # if we get here, then the key wasn't found
         return None
-
 
     def checkpointLog(self, cpfile):
         self.verbose_print("CHECKPOINTING LOG TO " + cpfile)
