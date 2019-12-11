@@ -208,7 +208,6 @@ class Logger(BaseMTTUtility):
         # if we get here, then the key wasn't found
         return None
 
-
     def checkpointLog(self, cpfile):
         self.verbose_print("CHECKPOINTING LOG TO " + cpfile)
         with open(cpfile + '.pkl', "wb") as f:
