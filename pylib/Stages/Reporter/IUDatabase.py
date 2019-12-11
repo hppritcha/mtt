@@ -61,6 +61,7 @@ class IUDatabase(ReporterMTTStage):
         self.options['email'] = (None, "Email to which errors are to be sent")
         self.options['debug_screen'] = (False, "Print debug output to screen")
         self.options['dryrun'] = (False, "Print debug without actually submitting to database server")
+        self.options['restart_file'] = (False, "Print debug without actually submitting to database server")
         self.cmds = {}
 
     def activate(self):
@@ -138,6 +139,9 @@ class IUDatabase(ReporterMTTStage):
         headers['content-type'] = 'application/json'
 
         data = {}
+
+        if self.options['restart_file'] is not None:
+            testDef.logger.restartLog('restart_file')
 
         profile = testDef.logger.getLog('Profile:Installed')
         metadata = {}
