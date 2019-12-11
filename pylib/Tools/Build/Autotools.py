@@ -59,6 +59,7 @@ class Autotools(BuildMTTTool):
         self.options['dependencies'] = (None, "List of dependencies specified as the build stage name - e.g., MiddlwareBuild_package to be added to configure using --with-package=location")
         self.options['make_envars'] = (None, "Environmental variables to set prior to executing make")
         self.options['subdir'] = (None, "Subdirectory that is to be built")
+        self.options['checkpoint_file'] = (None, "Checkpoint file")
         self.exclude = set(string.punctuation)
         return
 
@@ -596,6 +597,12 @@ class Autotools(BuildMTTTool):
 
         # return home
         os.chdir(cwd)
+        if cmds['checkpoint_file'] is not None:
+            print("Checkpointing the LOG at" + testDef.options['scratchdir'])
+#           testDef.logger.checkpointLog(testDef.options['scratchdir']+ "/" + cmds['checkpoint_file'])
+            filename_foo = cmds['checkpoint_file']
+            testDef.logger.checkpointLog(str(filename_foo))
+            print("Checkpointed the LOG at" + testDef.options['scratchdir'])
         # unload any envars we added
         for en in loadedenv:
             del os.environ[en]

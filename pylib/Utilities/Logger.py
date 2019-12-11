@@ -15,6 +15,7 @@ import datetime
 from BaseMTTUtility import *
 import json
 import os
+import pickle
 
 ## @addtogroup Utilities
 # @{
@@ -277,3 +278,11 @@ class Logger(BaseMTTUtility):
                 pass
         # if we get here, then the key wasn't found
         return None
+
+    def checkpointLog(self, cpfile):
+        with open(cpfile + '.pkl', 'wb') as fh:
+            pickle.dump(self.results, fh, pickle.HIGHEST_PROTOCOL);
+
+    def restartLog(self, cpfile):
+        with open(cpfile + '.pkl', 'rb') as fh:
+            self.results = pickle.load(fh)

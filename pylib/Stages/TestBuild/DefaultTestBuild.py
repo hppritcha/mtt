@@ -44,6 +44,7 @@ class DefaultTestBuild(TestBuildMTTStage):
         self.options['make_options'] = (None, "Options to be passed to the make command")
         self.options['make_envars'] = (None, "Environmental variables to set prior to executing make")
         self.options['subdir'] = (None, "Subdirectory of location that is to be built")
+        self.options['checkpoint_file'] = (None, "Checkpoint file")
 
     def activate(self):
         # get the automatic procedure from IPlugin
@@ -150,4 +151,7 @@ class DefaultTestBuild(TestBuildMTTStage):
         if midpath:
             os.environ['PATH'] = oldbinpath
             os.environ['LD_LIBRARY_PATH'] = oldldlibpath
+        if checkpoint_file is not None:
+            testDef.logger.checkpointLog(checkpoint_file)
+
         return
