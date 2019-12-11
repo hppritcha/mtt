@@ -604,6 +604,12 @@ class Autotools(BuildMTTTool):
 
         # return home
         os.chdir(cwd)
+        if cmds['checkpoint_file'] is not None:
+            print("Checkpointing the LOG at" + testDef.options['scratchdir'])
+#           testDef.logger.checkpointLog(testDef.options['scratchdir']+ "/" + cmds['checkpoint_file'])
+            filename_foo = cmds['checkpoint_file']
+            testDef.logger.checkpointLog(str(filename_foo))
+            print("Checkpointed the LOG at" + testDef.options['scratchdir'])
         # unload any envars we added
         for en in loadedenv:
             del os.environ[en]
