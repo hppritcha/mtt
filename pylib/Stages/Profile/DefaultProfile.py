@@ -85,3 +85,7 @@ class DefaultProfile(ProfileMTTStage):
         log['profile'] = myLog
         log['status'] = 0
         return
+
+    def savelog(self, testDef):
+        testDef.logger.verbose_print("Checking whether to ave log")
+        return
