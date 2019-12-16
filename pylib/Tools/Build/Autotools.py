@@ -60,6 +60,7 @@ class Autotools(BuildMTTTool):
         self.options['make_envars'] = (None, "Environmental variables to set prior to executing make")
         self.options['subdir'] = (None, "Subdirectory that is to be built")
         self.options['checkpoint_file'] = (None, "Checkpoint file")
+        self.checkpoint_file=''
         self.exclude = set(string.punctuation)
         return
 
@@ -120,6 +121,9 @@ class Autotools(BuildMTTTool):
             log['status'] = 1
             log['stderr'] = "Location of package to build was not specified in parent stage"
             return
+
+        if cmds['checkpoint_file'] is not None:
+            self.checkpoint_file = cmds['checkpoint_file']
 
         # see if we need to adjust the location to build what is in
         # a specific subdirectory of this location
@@ -597,14 +601,16 @@ class Autotools(BuildMTTTool):
 
         # return home
         os.chdir(cwd)
-        if cmds['checkpoint_file'] is not None:
-            print("Checkpointing the LOG at" + testDef.options['scratchdir'])
-#           testDef.logger.checkpointLog(testDef.options['scratchdir']+ "/" + cmds['checkpoint_file'])
-            filename_foo = cmds['checkpoint_file']
-            testDef.logger.checkpointLog(str(filename_foo))
-            print("Checkpointed the LOG at" + testDef.options['scratchdir'])
         # unload any envars we added
         for en in loadedenv:
             del os.environ[en]
 
+        return
+
+    def savelog(self,testDef):
+        print("Checkpointing whether to LOG " + self.checkpoint_file)
+        if self.checkpoint_file is not None:
+            print("Checkpointing the LOG at" + testDef.options['scratchdir'] + self.checkpoint_file)
+            testDef.logger.checkpointLog(self.checkpoint_file)
+            print("Checkpointed the LOG at" + testDef.options['scratchdir'])
         return

@@ -45,6 +45,7 @@ class DefaultMTTDefaults(MTTDefaultsMTTStage):
         self.options['stderr_save_lines'] = (-1, "Number of lines of stderr to save (-1 for unlimited)")
         self.options['executor'] = ('sequential', "Strategy to use: combinatorial or sequential executor")
         self.options['time'] = (True, "Record how long it takes to run each individual test")
+        self.options['restart_file'] = (None, "Log restart file")
         return
 
     def activate(self):
@@ -108,9 +109,17 @@ class DefaultMTTDefaults(MTTDefaultsMTTStage):
         # the parseOptions function will record status for us
         testDef.parseOptions(log, self.options, keyvals, cmds)
 
+        if cmds['restart_file'] is not None:
+            print("Reading restart LOG at" + testDef.options['scratchdir'])
+            testDef.logger.restartLog(str(cmds['restart_file']))
+            print("Read restart LOG at" + testDef.options['scratchdir'])
+
         # we need to record the results into our options so
         # subsequent sections can capture them
         keys = cmds.keys()
         for key in keys:
             self.options[key] = (cmds[key], self.options[key][1])
+        return
+
+    def savelog(self, testDef):
         return

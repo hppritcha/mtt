@@ -45,6 +45,7 @@ class DefaultTestBuild(TestBuildMTTStage):
         self.options['make_envars'] = (None, "Environmental variables to set prior to executing make")
         self.options['subdir'] = (None, "Subdirectory of location that is to be built")
         self.options['checkpoint_file'] = (None, "Checkpoint file")
+        self.checkpoint_file = ''
 
     def activate(self):
         # get the automatic procedure from IPlugin
@@ -73,6 +74,10 @@ class DefaultTestBuild(TestBuildMTTStage):
         # add our section header back into the cmds as it will
         # be needed by autotools
         cmds['section'] = keyvals['section']
+
+        if cmds['checkpoint_file'] is not None:
+            self.checkpoint_file = cmds['checkpoint_file']
+
         # if this test requires middleware, the user
         # should have told us so by specifying the
         # corresponding middlewareBuild stage for it.
@@ -151,7 +156,13 @@ class DefaultTestBuild(TestBuildMTTStage):
         if midpath:
             os.environ['PATH'] = oldbinpath
             os.environ['LD_LIBRARY_PATH'] = oldldlibpath
-        if checkpoint_file is not None:
-            testDef.logger.checkpointLog(checkpoint_file)
 
+        return
+
+    def savelog(self,testDef):
+        print("Checkpointing whether to LOG " + self.checkpoint_file)
+        if self.checkpoint_file is not None:
+            print("Checkpointing the LOG at" + testDef.options['scratchdir'] + self.checkpoint_file)
+            testDef.logger.checkpointLog(self.checkpoint_file)
+            print("Checkpointed the LOG at" + testDef.options['scratchdir'])
         return
