@@ -106,12 +106,23 @@ class OpenMPI(LauncherMTTTool):
 
     def execute(self, log, keyvals, testDef):
         self.testDef = testDef
+
         testDef.logger.verbose_print("OpenMPI Launcher")
 
+        testDef.logger.verbose_print("Parsing options")
         # parse any provided options - these will override the defaults
         cmds = {}
         testDef.parseOptions(log, self.options, keyvals, cmds)
         self.cmds = cmds
+        testDef.logger.verbose_print("Options parsed")
+
+        if cmds['checkpoint_file'] is not None:
+            self.checkpoint_file = cmds['checkpoint_file']
+
+#       if cmds['restart_file'] is not None:
+#           print("Reading restart LOG at" + testDef.options['scratchdir'])
+#           testDef.logger.restartLog(str(cmds['restart_file']))
+#           print("Read restart LOG at" + testDef.options['scratchdir'])
 
         if cmds['checkpoint_file'] is not None:
             self.checkpoint_file = cmds['checkpoint_file']
@@ -123,10 +134,12 @@ class OpenMPI(LauncherMTTTool):
             # et al is already in the log
             return
 
+        print("setting PATH and LD_LIBRARY_PATH")
         # now let's setup the PATH and LD_LIBRARY_PATH as reqd
         status = self.setupPaths(log, keyvals, cmds, testDef)
         if status != 0:
             # something went wrong - error is in the log
+            print("setting PATH and LD_LIBRARY_PATH didn't work")
             return
 
         # collect the tests to be considered
@@ -134,6 +147,7 @@ class OpenMPI(LauncherMTTTool):
         # check that we found something
         if status != 0:
             # something went wrong - error is in the log
+            print("ops collecttests failed")
             self.resetPaths(log, testDef)
             return
 
@@ -156,10 +170,12 @@ class OpenMPI(LauncherMTTTool):
         # Allocate cluster
         status = self.allocateCluster(log, cmds, testDef)
         if 0 != status:
+            print("allocate cluster failed")
             self.resetPaths(log, testDef)
             return
 
         # execute the tests
+        print("running the tests")
         self.runTests(log, cmdargs, cmds, testDef)
 
         # Deallocate cluster
