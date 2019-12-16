@@ -154,6 +154,7 @@ class Logger(BaseMTTUtility):
                 print("Error: Could not verbose print due to a UnicodeEncodeError")
                 print(e)
                 sys.stdout.flush()
+            sys.stdout.flush()
             return
 
     def timestamp(self):
@@ -180,6 +181,9 @@ class Logger(BaseMTTUtility):
             try:
                 if result['status'] is not None:
                     print("Section " + result['section'] + ": Status " + str(result['status']), file=self.fh)
+                    print("==========================================================", file=self.fh)
+                    for schlussel in result:
+                        print("key " + str(schlussel) + "value = " + str(result[schlussel]), file=self.fh)
                     sys.stdout.flush()
                     if 0 != result['status']:
                         try:
@@ -207,6 +211,7 @@ class Logger(BaseMTTUtility):
                 pass
         # if we get here, then the key wasn't found
         return None
+
 
     def checkpointLog(self, cpfile):
         self.verbose_print("CHECKPOINTING LOG TO " + cpfile)

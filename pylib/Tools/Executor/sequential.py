@@ -160,10 +160,12 @@ class SequentialEx(ExecutorMTTTool):
                     # log this stage as also having failed and skip it
                     try:
                         parent = keyvals['parent']
+                        testDef.logger.verbose_print("Starting logging results here " + str(parent))
                         if parent is not None:
                             # get the log entry as it contains the status
                             bldlog = testDef.logger.getLog(parent)
                             if bldlog is None:
+                                testDef.logger.verbose_print("Did not find parent log")
                                 # couldn't find the parent's log - cannot continue
                                 stageLog['status'] = 1
                                 stageLog['stderr'] = ["Prior dependent step did not record a log"]
@@ -171,7 +173,9 @@ class SequentialEx(ExecutorMTTTool):
                                 testDef.plugin_trans_sem.acquire()
                                 continue
                             try:
+                                testDef.logger.verbose_print("Found parent log")
                                 if bldlog['status'] != 0:
+                                    testDef.logger.verbose_print("Found bad status for parent log")
                                     # the parent step failed, and so we
                                     # cannot proceed here either
                                     stageLog['status'] = bldlog['status']
@@ -337,6 +341,13 @@ class SequentialEx(ExecutorMTTTool):
 
                     # Log results for section
                     testDef.logger.logResults(disp_title, stageLog, testDef)
+
+                    # Optional save log
+                    try:
+                        testDef.logger.verbose_print("Checking avelog option")
+                        plugin.savelog(testDef)
+                    except:
+                        continue
 
                     # Print end of section
                     testDef.logger.stage_end_print(disp_title, stageLog)
