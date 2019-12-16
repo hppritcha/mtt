@@ -152,6 +152,7 @@ class Logger(BaseMTTUtility):
                 print("Error: Could not verbose print due to a UnicodeEncodeError")
                 print(e)
                 sys.stdout.flush()
+            sys.stdout.flush()
             return
 
     def timestamp(self):
@@ -178,6 +179,9 @@ class Logger(BaseMTTUtility):
             try:
                 if result['status'] is not None:
                     print("Section " + result['section'] + ": Status " + str(result['status']), file=self.fh)
+                    print("==========================================================", file=self.fh)
+                    for schlussel in result:
+                        print("key " + str(schlussel) + "value = " + str(result[schlussel]), file=self.fh)
                     sys.stdout.flush()
                     if 0 != result['status']:
                         try:
@@ -206,10 +210,20 @@ class Logger(BaseMTTUtility):
         # if we get here, then the key wasn't found
         return None
 
+
     def checkpointLog(self, cpfile):
-        with open(cpfile + '.pkl', 'wb') as fh:
-            pickle.dump(self.results, fh, pickle.HIGHEST_PROTOCOL);
+        self.verbose_print("CHECKPOINTING LOG TO " + cpfile)
+        with open(cpfile + '.pkl', "wb") as f:
+            pickle.dump(self.results, f)
+        self.verbose_print("CHECKPOINTED LOG TO " + cpfile)
 
     def restartLog(self, cpfile):
-        with open(cpfile + '.pkl', 'rb') as fh:
+        try:
+            self.verbose_print("READING LOG FROM " + cpfile)
+            fh = open(cpfile + '.pkl', 'rb')
             self.results = pickle.load(fh)
+            fh.close()
+            self.outputLog()
+        except IOError:
+            print("Section " + result['section'] + " failed to open checkpoint file for reading", file=self.fh)
+            sys.stdout.flush()
