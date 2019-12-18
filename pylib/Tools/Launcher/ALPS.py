@@ -65,7 +65,9 @@ class ALPS(LauncherMTTTool):
         self.options['allocate_cmd'] = (None, "Command to use for allocating nodes from the resource manager")
         self.options['deallocate_cmd'] = (None, "Command to use for deallocating nodes from the resource manager")
         self.options['dependencies'] = (None, "List of dependencies specified as the build stage name - e.g., MiddlwareBuild_package to be added to configure using --with-package=location")
+        self.options['checkpoint_file'] = (None, "Log restart file")
 
+        self.checkpoint_file=''
         self.allocated = False
         self.testDef = None
         self.cmds = None
@@ -102,6 +104,9 @@ class ALPS(LauncherMTTTool):
         cmds = {}
         testDef.parseOptions(log, self.options, keyvals, cmds)
         self.cmds = cmds
+
+        if cmds['checkpoint_file'] is not None:
+            self.checkpoint_file = cmds['checkpoint_file']
 
         # check the log for the title so we can
         # see if this is setting our default behavior
@@ -155,6 +160,7 @@ class ALPS(LauncherMTTTool):
         self.runTests(log, cmdargs, cmds, testDef)
 
         # Deallocate cluster
+
         self.deallocateCluster(log, cmds, testDef)
 
         # reset our paths and return us to our cwd
@@ -176,3 +182,16 @@ class ALPS(LauncherMTTTool):
             log['np'] = cmds['np']
 
         return
+
+    def savelog(self,testDef):
+        print("Checkpointing whether to LOG " + self.checkpoint_file)
+        if self.checkpoint_file is not None:
+            print("Checkpointing the LOG at" + testDef.options['scratchdir'] + self.checkpoint_file)
+            try:
+                testDef.logger.checkpointLog(self.checkpoint_file)
+            except General as X:
+                print("CAUGHT " + X.__class__)
+
+            print("Checkpointed the LOG at" + testDef.options['scratchdir'])
+        return
+
