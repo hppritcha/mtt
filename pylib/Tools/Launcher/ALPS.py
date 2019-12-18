@@ -70,7 +70,6 @@ class ALPS(LauncherMTTTool):
         self.options['dependencies'] = (None, "List of dependencies specified as the build stage name - e.g., MiddlwareBuild_package to be added to configure using --with-package=location")
         self.options['checkpoint_file'] = (None, "Checkpoint file")
         self.checkpoint_file=''
-
         self.allocated = False
         self.testDef = None
         self.cmds = None
@@ -164,6 +163,7 @@ class ALPS(LauncherMTTTool):
         self.runTests(log, cmdargs, cmds, testDef)
 
         # Deallocate cluster
+
         self.deallocateCluster(log, cmds, testDef)
 
         # reset our paths and return us to our cwd
