@@ -223,7 +223,6 @@ class Logger(BaseMTTUtility):
             fh = open(cpfile + '.pkl', 'rb')
             self.results = pickle.load(fh)
             fh.close()
-            self.outputLog()
         except IOError:
             print("Section " + result['section'] + " failed to open checkpoint file for reading", file=self.fh)
             sys.stdout.flush()
