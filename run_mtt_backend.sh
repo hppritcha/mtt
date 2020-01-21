@@ -9,5 +9,5 @@ else
 fi
 cd $HOME/mtt
 export MTT_HOME=$PWD
-pyclient/pymtt.py --verbose --trial run_ibm_tests_alps_$BRANCH.ini
+pyclient/pymtt.py --verbose run_ibm_tests_alps_$BRANCH.ini
 
