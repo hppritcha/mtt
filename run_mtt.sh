@@ -9,12 +9,14 @@ if $( echo ${LOADEDMODULES} | grep --quiet 'PrgEnv-intel' ); then
     module swap PrgEnv-intel PrgEnv-gnu
 fi
 
+cd $HOME/mtt
 if [ $# -eq 0 ] ; then
   BRANCH=master
+  rm -f -r master_scratch/*
 else
   BRANCH=$1
+  rm -f -r v4.0.x_scratch/*
 fi
-cd $HOME/mtt
 export MTT_HOME=$PWD
 echo "============== Testing $BRANCH  ==============="
 pyclient/pymtt.py --verbose  get_ompi_$BRANCH.ini
