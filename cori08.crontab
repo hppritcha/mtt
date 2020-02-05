@@ -1,0 +1,3 @@
+*/5 * * * * . $HOME/.profile; /global/homes/h/hpp/jenkins_cori/agent-keepalive.sh
+00 01 * * * $HOME/mtt/run_mtt.sh > $HOME/mtt/build_master.out 2>&1
+
