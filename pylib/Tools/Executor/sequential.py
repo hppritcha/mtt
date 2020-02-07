@@ -339,9 +339,6 @@ class SequentialEx(ExecutorMTTTool):
                     # Log results for section
                     testDef.logger.logResults(disp_title, stageLog, testDef)
 
-                    # Print end of section
-                    testDef.logger.stage_end_print(disp_title, stageLog)
-
                     # Optional save log
                     try:
                         plugin.savelog(testDef)
