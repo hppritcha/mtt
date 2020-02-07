@@ -295,8 +295,7 @@ class SequentialEx(ExecutorMTTTool):
                         stageLog['stderr'] = stageLog['stderr'].split("\n")
 
                     # Log results for section
-                    testDef.logger.verbose_print("Invoking log Results for %s" % plugin.print_name())
-                    testDef.logger.logResults(disp_title, stageLog)
+                    testDef.logger.logResults(disp_title, stageLog, testDef)
 
                     # Optional save log
                     try:
