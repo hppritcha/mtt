@@ -1,12 +1,13 @@
 #!/bin/bash -l
 
-module load python/3.7-anaconda-2019.07
+module load python/3.6-anaconda-5.0.1
 #
 # somethings borked with Intel at the moment
 #
-if $( echo ${LOADEDMODULES} | grep --quiet 'PrgEnv-intel' ); then
-    module swap PrgEnv-intel PrgEnv-gnu
-fi
+#if $( echo ${LOADEDMODULES} | grep --quiet 'PrgEnv-intel' ); then
+#    module swap PrgEnv-intel PrgEnv-gnu
+#fi
+
 if [ $# -eq 0 ] ; then
   BRANCH=master
 else
