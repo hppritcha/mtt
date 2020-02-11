@@ -15,6 +15,9 @@ server/php/submit/php_errors.log
 server/php/submit/cpy
 *.pyc
 *.bak
+*.error
+*.cobaltlog
+*.output
 .DS_Store
 db.sqlite3
 */mttscratch
