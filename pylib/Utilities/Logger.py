@@ -221,7 +221,7 @@ class Logger(BaseMTTUtility):
             fh = open(cpfile + '.pkl', 'rb')
             self.results = pickle.load(fh)
             fh.close()
-            self.outputLog()
+#           self.outputLog()
         except IOError:
             print("Failed to open checkpoint file for reading", file=self.fh)
             sys.stdout.flush()
