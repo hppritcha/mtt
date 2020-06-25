@@ -12,11 +12,12 @@ module load python/3.6-anaconda-5.0.1
 cd $HOME/mtt
 if [ $# -eq 0 ] ; then
   BRANCH=master
-  rm -f -r /lustre/ttscratch1/hpp/mtt/master_scratch/*
 else
   BRANCH=$1
-  rm -f -r /lustre/ttscratch1/hpp/mtt/v4.0.x_scratch/*
 fi
+SCRATCH_FILE=$BRANCH"_scratch"
+SCRATCH_DIR=/lustre/ttscratch1/hpp/mtt/$SCRATCH_FILE
+rm -f -r $SCRATCH_DIR
 export MTT_HOME=$PWD
 echo "============== Testing $BRANCH  ==============="
 pyclient/pymtt.py --verbose  get_ompi_$BRANCH.ini
