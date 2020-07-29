@@ -2,6 +2,7 @@
 
 module load miniconda-3/latest
 module swap PrgEnv-intel PrgEnv-gnu
+module swap craype-mic-knl craype-haswell
 if [ $# -eq 0 ] ; then
   BRANCH=master
 else
