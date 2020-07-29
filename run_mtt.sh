@@ -1,6 +1,7 @@
 #!/bin/bash -l
 
 module load miniconda-3/latest
+module swap craype-mic-knl craype-haswell
 
 #
 # somethings borked with Intel at the moment
@@ -12,11 +13,13 @@ fi
 cd $HOME/mtt
 if [ $# -eq 0 ] ; then
   BRANCH=master
-  rm -f -r master_scratch/*
 else
   BRANCH=$1
-  rm -f -r v4.0.x_scratch/*
 fi
+SCRATCH_FILE=$BRANCH"_scratch"
+SCRATCH_DIR=/home/howardp/mtt/$SCRATCH_FILE
+rm -f -r $SCRATCH_DIR
+
 export MTT_HOME=$PWD
 echo "============== Testing $BRANCH  ==============="
 pyclient/pymtt.py --verbose  get_ompi_$BRANCH.ini
