@@ -28,3 +28,4 @@ server/php/cherrypy/src/.mtt_server.pid
 
 server/php/submit/.htaccess
 slurm*.out
+build*.out
