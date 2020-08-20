@@ -12,11 +12,12 @@ fi
 cd $HOME/mtt
 if [ $# -eq 0 ] ; then
   BRANCH=master
-  rm -f -r $HOME/mtt/master_scratch/*
 else
   BRANCH=$1
-  rm -f -r $HOME/mtt/v4.0.x_scratch/*
 fi
+SCRATCH_FILE=$BRANCH"_scratch"
+SCRATCH_DIR=/global/homes/h/hpp/mtt/$SCRATCH_FILE
+rm -f -r $SCRATCH_DIR
 export MTT_HOME=$PWD
 echo "============== Testing $BRANCH  ==============="
 pyclient/pymtt.py --verbose  get_ompi_$BRANCH.ini
@@ -26,7 +27,7 @@ then
     exit -1
 fi
 echo "============== Submitting batch job for Testing $BRANCH  ==============="
-jobid=`sbatch --wait --parsable -N 4 -C knl --time=4:00:00 -qregular --tasks-per-node=32 ./run_mtt_backend.sh $BRANCH`
+jobid=`sbatch --wait --parsable -N 4 -C knl --time=8:00:00 -qregular --tasks-per-node=32 ./run_mtt_backend.sh $BRANCH`
 if [ $jobid -eq 1 ]; then
     echo "Something went wrong with batch job"
     exit -1
