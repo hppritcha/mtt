@@ -8,7 +8,14 @@ if [ $# -eq 0 ] ; then
 else
   BRANCH=$1
 fi
+if [ $BRANCH = "master" ]; then
+  LAUNCHER=mpirun
+else
+  LAUNCHER=alps
+fi
 cd $HOME/mtt
 export MTT_HOME=$PWD
-pyclient/pymtt.py --verbose run_ibm_tests_alps_$BRANCH.ini
+echo "LAUNCHER = ",$LAUNCHER
+echo "BRANCH = ",$BRANCH
+pyclient/pymtt.py --verbose run_ibm_tests_$LAUNCHER\_$BRANCH.ini
 
