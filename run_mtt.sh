@@ -2,6 +2,7 @@
 
 module load miniconda-3/latest
 module swap craype-mic-knl craype-haswell
+conda init bash
 
 #
 # somethings borked with Intel at the moment
