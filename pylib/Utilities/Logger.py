@@ -3,6 +3,8 @@ from builtins import str
 #!/usr/bin/env python
 #
 # Copyright (c) 2015-2018 Intel, Inc. All rights reserved.
+# Copyright (c) 2021      Triad National Security, LLC. All rights
+#                         reserved.
 # $COPYRIGHT$
 #
 # Additional copyrights may follow
@@ -152,7 +154,6 @@ class Logger(BaseMTTUtility):
                 print("Error: Could not verbose print due to a UnicodeEncodeError")
                 print(e)
                 sys.stdout.flush()
-            sys.stdout.flush()
             return
 
     def timestamp(self):
@@ -180,8 +181,8 @@ class Logger(BaseMTTUtility):
                 if result['status'] is not None:
                     print("Section " + result['section'] + ": Status " + str(result['status']), file=self.fh)
                     print("==========================================================", file=self.fh)
-                    for schlussel in result:
-                        print("key " + str(schlussel) + "value = " + str(result[schlussel]), file=self.fh)
+                    for schl in result:
+                        print("key " + str(schl) + "value = " + str(result[schl]), file=self.fh)
                     sys.stdout.flush()
                     if 0 != result['status']:
                         try:

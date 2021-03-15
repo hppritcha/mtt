@@ -1,6 +1,8 @@
 # -*- coding: utf-8; tab-width: 4; indent-tabs-mode: f; python-indent: 4 -*-
 #
 # Copyright (c) 2015-2019 Intel, Inc.  All rights reserved.
+# Copyright (c) 2021      Triad National Security, LLC. All rights
+#                         reserved.
 # $COPYRIGHT$
 #
 # Additional copyrights may follow
@@ -27,6 +29,7 @@ from TestBuildMTTStage import *
 # @param make_options              Options to be passed to the make command
 # @param make_envars               Environmental variables to set prior to executing make
 # @param subdir                    Subdirectory of location that is to be built
+# @param checkpoint_file           Optional checkpoint file
 # @}
 class DefaultTestBuild(TestBuildMTTStage):
 
@@ -160,9 +163,6 @@ class DefaultTestBuild(TestBuildMTTStage):
         return
 
     def savelog(self,testDef):
-        print("Checkpointing whether to LOG " + self.checkpoint_file)
         if self.checkpoint_file is not None:
-            print("Checkpointing the LOG at" + testDef.options['scratchdir'] + self.checkpoint_file)
             testDef.logger.checkpointLog(self.checkpoint_file)
-            print("Checkpointed the LOG at" + testDef.options['scratchdir'])
         return

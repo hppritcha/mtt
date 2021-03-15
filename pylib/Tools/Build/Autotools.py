@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 #
 # Copyright (c) 2015-2019 Intel, Inc.  All rights reserved.
+# Copyright (c) 2021      Triad National Security, LLC. All rights
+#                         reserved.
 # $COPYRIGHT$
 #
 # Additional copyrights may follow
@@ -37,6 +39,7 @@ from BuildMTTTool import *
 # @param dependencies              List of dependencies specified as the build stage name
 # @param make_envars               Environmental variables to set prior to executing make
 # @param subdir                    Subdirectory that is to be built
+# @param checkpoint_file           Optional checkpoint file
 
 # @}
 class Autotools(BuildMTTTool):
@@ -608,9 +611,6 @@ class Autotools(BuildMTTTool):
         return
 
     def savelog(self,testDef):
-        print("Checkpointing whether to LOG " + self.checkpoint_file)
         if self.checkpoint_file is not None:
-            print("Checkpointing the LOG at" + testDef.options['scratchdir'] + self.checkpoint_file)
             testDef.logger.checkpointLog(self.checkpoint_file)
-            print("Checkpointed the LOG at" + testDef.options['scratchdir'])
         return

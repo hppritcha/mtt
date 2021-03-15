@@ -3,6 +3,8 @@
 # Copyright (c) 2015-2019 Intel, Inc.  All rights reserved.
 # Copyright (c) 2017      Los Alamos National Security, LLC. All rights
 #                         reserved.
+# Copyright (c) 2021      Triad National Security, LLC. All rights
+#                         reserved.
 # $COPYRIGHT$
 #
 # Additional copyrights may follow
@@ -42,6 +44,7 @@ import shlex
 # @param modules         Modules to load
 # @param modules_swap    Modules to swap
 # @param dependencies              List of dependencies specified as the build stage name
+# @param checkpoint_file           Optional checkoutpoint file
 # @}
 class OpenMPI(LauncherMTTTool):
 
@@ -106,20 +109,13 @@ class OpenMPI(LauncherMTTTool):
 
         testDef.logger.verbose_print("OpenMPI Launcher")
 
-        testDef.logger.verbose_print("Parsing options")
         # parse any provided options - these will override the defaults
         cmds = {}
         testDef.parseOptions(log, self.options, keyvals, cmds)
         self.cmds = cmds
-        testDef.logger.verbose_print("Options parsed")
 
         if cmds['checkpoint_file'] is not None:
             self.checkpoint_file = cmds['checkpoint_file']
-
-#       if cmds['restart_file'] is not None:
-#           print("Reading restart LOG at" + testDef.options['scratchdir'])
-#           testDef.logger.restartLog(str(cmds['restart_file']))
-#           print("Read restart LOG at" + testDef.options['scratchdir'])
 
         # update our defaults, if requested
         status = self.updateDefaults(log, self.options, keyvals, testDef)
@@ -128,7 +124,6 @@ class OpenMPI(LauncherMTTTool):
             # et al is already in the log
             return
 
-        print("setting PATH and LD_LIBRARY_PATH")
         # now let's setup the PATH and LD_LIBRARY_PATH as reqd
         status = self.setupPaths(log, keyvals, cmds, testDef)
         if status != 0:
@@ -141,7 +136,6 @@ class OpenMPI(LauncherMTTTool):
         # check that we found something
         if status != 0:
             # something went wrong - error is in the log
-            print("ops collecttests failed")
             self.resetPaths(log, testDef)
             return
 
@@ -164,12 +158,10 @@ class OpenMPI(LauncherMTTTool):
         # Allocate cluster
         status = self.allocateCluster(log, cmds, testDef)
         if 0 != status:
-            print("allocate cluster failed")
             self.resetPaths(log, testDef)
             return
 
         # execute the tests
-        print("running the tests")
         self.runTests(log, cmdargs, cmds, testDef)
 
         # Deallocate cluster
@@ -181,14 +173,11 @@ class OpenMPI(LauncherMTTTool):
         return
 
     def savelog(self,testDef):
-        print("Checkpointing whether to LOG " + self.checkpoint_file)
         if self.checkpoint_file is not None:
-            print("Checkpointing the LOG at" + testDef.options['scratchdir'] + self.checkpoint_file)
             try: 
                 testDef.logger.checkpointLog(self.checkpoint_file)
             except General as X: 
                 print("CAUGHT " + X.__class__)
                 
-            print("Checkpointed the LOG at" + testDef.options['scratchdir'])
         return
 

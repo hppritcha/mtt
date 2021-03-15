@@ -1,6 +1,8 @@
 # -*- coding: utf-8; tab-width: 4; indent-tabs-mode: f; python-indent: 4 -*-
 #
 # Copyright (c) 2015-2018 Intel, Inc.  All rights reserved.
+# Copyright (c) 2021      Triad National Security, LLC. All rights
+#                         reserved.
 # $COPYRIGHT$
 #
 # Additional copyrights may follow
@@ -28,6 +30,7 @@ from MTTDefaultsMTTStage import *
 # @param stderr_save_lines     Number of lines of stderr to save (-1 for unlimited)
 # @param executor              Strategy to use: combinatorial or sequential executor
 # @param time                  Record how long it takes to run each individual test
+# @param restart_file          Optional restart log file 
 # @}
 class DefaultMTTDefaults(MTTDefaultsMTTStage):
 
@@ -110,9 +113,7 @@ class DefaultMTTDefaults(MTTDefaultsMTTStage):
         testDef.parseOptions(log, self.options, keyvals, cmds)
 
         if cmds['restart_file'] is not None:
-            print("Reading restart LOG at" + testDef.options['scratchdir'])
             testDef.logger.restartLog(str(cmds['restart_file']))
-            print("Read restart LOG at" + testDef.options['scratchdir'])
 
         # we need to record the results into our options so
         # subsequent sections can capture them
