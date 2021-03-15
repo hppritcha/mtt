@@ -295,17 +295,17 @@ class SequentialEx(ExecutorMTTTool):
                     # Log results for section
                     testDef.logger.logResults(disp_title, stageLog, testDef)
 
+                    # Print end of section
+                    testDef.logger.stage_end_print(disp_title, stageLog)
+
                     # Optional save log
                     try:
                         plugin.savelog(testDef)
                     except:
                         continue
 
-                    # Print end of section
-                    testDef.logger.stage_end_print(disp_title, stageLog)
-
-                    # Log results for section
-                    testDef.logger.logResults(disp_title, stageLog, testDef)
+#                   # Log results for section
+#                   testDef.logger.logResults(disp_title, stageLog, testDef)
 
                     if testDef.options['stop_on_fail'] is not False and stageLog['status'] != 0:
                         print("Section " + stageLog['section'] + ": Status " + str(stageLog['status']))
