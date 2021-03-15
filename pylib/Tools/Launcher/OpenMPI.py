@@ -106,7 +106,6 @@ class OpenMPI(LauncherMTTTool):
 
     def execute(self, log, keyvals, testDef):
         self.testDef = testDef
-
         testDef.logger.verbose_print("OpenMPI Launcher")
 
         # parse any provided options - these will override the defaults
@@ -128,7 +127,6 @@ class OpenMPI(LauncherMTTTool):
         status = self.setupPaths(log, keyvals, cmds, testDef)
         if status != 0:
             # something went wrong - error is in the log
-            print("setting PATH and LD_LIBRARY_PATH didn't work")
             return
 
         # collect the tests to be considered
@@ -177,7 +175,7 @@ class OpenMPI(LauncherMTTTool):
             try: 
                 testDef.logger.checkpointLog(self.checkpoint_file)
             except General as X: 
-                print("CAUGHT " + X.__class__)
+                print("checkpoint failed - CAUGHT " + X.__class__)
                 
         return
 

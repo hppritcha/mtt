@@ -180,9 +180,6 @@ class Logger(BaseMTTUtility):
             try:
                 if result['status'] is not None:
                     print("Section " + result['section'] + ": Status " + str(result['status']), file=self.fh)
-                    print("==========================================================", file=self.fh)
-                    for schl in result:
-                        print("key " + str(schl) + "value = " + str(result[schl]), file=self.fh)
                     sys.stdout.flush()
                     if 0 != result['status']:
                         try:
