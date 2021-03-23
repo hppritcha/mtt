@@ -237,7 +237,3 @@ class OMPI_Snapshot(FetchMTTTool):
         os.chdir(cwd)
 
         return
-
-    def savelog(self, testDef):
-        testDef.logger.verbose_print("OMP_Snapshot checkpoint")
-        return

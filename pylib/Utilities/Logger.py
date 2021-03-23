@@ -183,7 +183,7 @@ class Logger(BaseMTTUtility):
                     sys.stdout.flush()
                     if 0 != result['status']:
                         try:
-                            print("    " + result['stderr'], file=self.fh)
+                            print("    " + str(result['stderr']), file=self.fh)
                             sys.stdout.flush()
                         except KeyError:
                             pass
