@@ -1,6 +1,6 @@
 #!/bin/bash -l
 
-module load python/3.6-anaconda-5.0.1
+module load gcc
 #
 # somethings borked with Intel at the moment
 #
@@ -13,7 +13,7 @@ if [ $# -eq 0 ] ; then
 else
   BRANCH=$1
 fi
-cd $HOME/mtt
+cd /usr/projects/artab/users/hpp/mtt
 export MTT_HOME=$PWD
 pyclient/pymtt.py --verbose run_ibm_tests_mpirun_$BRANCH.ini
 
