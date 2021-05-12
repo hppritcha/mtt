@@ -31,7 +31,7 @@ then
     exit -1
 fi
 echo "============== Submitting batch job for Testing $BRANCH  ==============="
-jobid=`sbatch --wait --parsable -N 4 --time=6:00:00 --tasks-per-node=8 ./run_mtt_backend.sh $BRANCH`
+jobid=`sbatch -o slurm.$BRANCH.out --wait --parsable -N 4 --time=6:00:00 --tasks-per-node=8 ./run_mtt_backend.sh $BRANCH`
 if [ $jobid -eq 1 ]; then
     echo "Something went wrong with batch job"
     exit -1
