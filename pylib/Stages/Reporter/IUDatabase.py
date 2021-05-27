@@ -204,6 +204,7 @@ class IUDatabase(ReporterMTTStage):
         # Well no TestRun section, so try TestBuild
         #
         if found_it == False:
+            print("Did not find test run section looking for test build section")
             for lg in fullLog:
                 # Find sections prefixed with 'TestBuild'
                 if re.match("TestBuild", lg['section']):
@@ -213,6 +214,7 @@ class IUDatabase(ReporterMTTStage):
         # Well no TestBuild section found, so try MiddlewareBuild
         #
         if found_it == False:
+            print("Did not find test run section looking for Middleware build section")
             for lg in fullLog:
                 # Find sections prefixed with 'MiddlewareBuild'
                 if re.match("Middlewarebuild", lg['section']):
