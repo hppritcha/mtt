@@ -24,13 +24,12 @@ pyclient/pymtt.py --verbose  get_ompi_$BRANCH.ini
 if [ $? -ne 0 ]
 then
     echo "Something went wrong with fetch/build phase"
-    exit -1
-fi
-echo "============== Submitting batch job for Testing $BRANCH  ==============="
-jobid=`sbatch -o slurm.$BRANCH.out --wait --parsable -N 4 -C knl --time=8:00:00 -qregular --tasks-per-node=32 -J $BRANCH ./run_mtt_backend.sh $BRANCH`
-if [ $jobid -eq 1 ]; then
-    echo "Something went wrong with batch job"
-    exit -1
+else
+    echo "============== Submitting batch job for Testing $BRANCH  ==============="
+    jobid=`sbatch -o slurm.$BRANCH.out --wait --parsable -N 4 -C knl --time=8:00:00 -qregular --tasks-per-node=32 -J $BRANCH ./run_mtt_backend.sh $BRANCH`
+    if [ $jobid -eq 1 ]; then
+        echo "Something went wrong with batch job"
+    fi
 fi
 pyclient/pymtt.py --verbose  iu_reporter_$BRANCH.ini
 
