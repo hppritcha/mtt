@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -l
 
 module load cgpu
 cd $HOME/mtt_cgpu
