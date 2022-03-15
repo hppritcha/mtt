@@ -63,7 +63,7 @@ class Autotools(BuildMTTTool):
         self.options['make_envars'] = (None, "Environmental variables to set prior to executing make")
         self.options['subdir'] = (None, "Subdirectory that is to be built")
         self.options['checkpoint_file'] = (None, "Checkpoint file")
-        self.checkpoint_file=''
+        self.checkpoint_file=None
         self.exclude = set(string.punctuation)
         return
 
@@ -507,7 +507,7 @@ class Autotools(BuildMTTTool):
         bldargs.append("all")
         results = testDef.execmd.execute(cmds, bldargs, testDef)
         if 0 != results['status']:
-            log['status'] = results['status']
+#           log['status'] = results['status']
             log['stdout'] = results['stdout']
             log['stderr'] = results['stderr']
             log['result'] = testDef.MTT_TEST_FAILED
