@@ -48,7 +48,7 @@ class DefaultTestBuild(TestBuildMTTStage):
         self.options['make_envars'] = (None, "Environmental variables to set prior to executing make")
         self.options['subdir'] = (None, "Subdirectory of location that is to be built")
         self.options['checkpoint_file'] = (None, "Checkpoint file")
-        self.checkpoint_file = ''
+        self.checkpoint_file = None
 
     def activate(self):
         # get the automatic procedure from IPlugin

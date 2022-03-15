@@ -76,7 +76,7 @@ class OpenMPI(LauncherMTTTool):
         self.options['dependencies'] = (None, "List of dependencies specified as the build stage name - e.g., MiddlwareBuild_package to be added to configure using --with-package=location")
         self.options['checkpoint_file'] = (None, "Log restart file")
 
-        self.checkpoint_file=''
+        self.checkpoint_file=None
         self.allocated = False
         self.testDef = None
         self.cmds = None
