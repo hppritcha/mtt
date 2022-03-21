@@ -1,6 +1,13 @@
 #!/bin/bash -l
 
 module load python
+module load PrgEnv-gnu
+module unload cray-libsci
+module unload cray-mpich
+module unload cray-dsmml
+module unload darshan
+module load cudatoolkit
+
 
 cd $HOME/mtt_perlmutter
 if [ $# -eq 0 ] ; then
