@@ -1,13 +1,14 @@
 #!/bin/bash -l
 
-module load python/3.7-anaconda-2019.07
-
+#module load python/3.7-anaconda-2019.07
+module load PrgEnv-gnu
+module unload cray-libsci
+module unload cray-mpich
+module unload cray-dsmml
 #
-# somethings borked with Intel at the moment
+# workaround for OMPI issue 10153
 #
-if $( echo ${LOADEDMODULES} | grep --quiet 'PrgEnv-intel' ); then
-    module swap PrgEnv-intel PrgEnv-gnu
-fi
+export PRTE_MCA_plm=ssh
 
 cd $HOME/mtt
 if [ $# -eq 0 ] ; then
@@ -16,7 +17,7 @@ else
   BRANCH=$1
 fi
 SCRATCH_FILE=$BRANCH"_scratch"
-SCRATCH_DIR=/global/homes/h/hpp/mtt/$SCRATCH_FILE
+SCRATCH_DIR=/ccs/home/howardp/mtt/$SCRATCH_FILE
 rm -f -r $SCRATCH_DIR
 export MTT_HOME=$PWD
 echo "============== Testing $BRANCH  ==============="
@@ -26,7 +27,7 @@ then
     echo "Something went wrong with fetch/build phase"
 else
     echo "============== Submitting batch job for Testing $BRANCH  ==============="
-    jobid=`sbatch -o slurm.$BRANCH.out --wait --parsable -N 4 -C knl --time=8:00:00 -qregular --tasks-per-node=32 -J $BRANCH ./run_mtt_backend.sh $BRANCH`
+    jobid=`sbatch -o slurm.$BRANCH.out --wait --parsable -N 4  -N 4 -AGEN010_crusher -t 4:00:00 --tasks-per-node=32 -J $BRANCH ./run_mtt_backend.sh $BRANCH`
     if [ $jobid -eq 1 ]; then
         echo "Something went wrong with batch job"
     fi
