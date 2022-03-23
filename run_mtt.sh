@@ -27,7 +27,7 @@ then
     echo "Something went wrong with fetch/build phase"
 else
     echo "============== Submitting batch job for Testing $BRANCH  ==============="
-    jobid=`sbatch -o slurm.$BRANCH.out --wait --parsable -N 4  -N 4 -AGEN010_crusher -t 4:00:00 --tasks-per-node=32 -J $BRANCH ./run_mtt_backend.sh $BRANCH`
+    jobid=`sbatch -o slurm.$BRANCH.out --wait --parsable -N 4  -N 4 -AGEN010_crusher -t 8:00:00 --tasks-per-node=32 -J $BRANCH ./run_mtt_backend.sh $BRANCH`
     if [ $jobid -eq 1 ]; then
         echo "Something went wrong with batch job"
     fi
