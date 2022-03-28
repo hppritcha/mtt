@@ -5,13 +5,13 @@ module load PrgEnv-gnu
 module unload cray-libsci
 module unload cray-mpich
 module unload cray-dsmml
-#
-# workaround for OMPI issue 10153
-#
-export PRTE_MCA_plm=ssh
 
 cd $HOME/mtt
 if [ $# -eq 0 ] ; then
+  #
+  # workaround for OMPI issue 10153
+  #
+  export PRTE_MCA_plm=ssh
   BRANCH=master
 else
   BRANCH=$1
@@ -32,5 +32,5 @@ else
         echo "Something went wrong with batch job"
     fi
 fi
-pyclient/pymtt.py --verbose  iu_reporter_$BRANCH.ini
+#pyclient/pymtt.py --verbose  iu_reporter_$BRANCH.ini
 
