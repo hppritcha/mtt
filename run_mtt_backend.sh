@@ -8,7 +8,7 @@ if [ $# -eq 0 ] ; then
 else
   BRANCH=$1
 fi
-if [ $BRANCH = "master" ]; then
+if [[ "$BRANCH" = "master" || "$BRANCH" = "v5.0.x" ]]; then
   LAUNCHER=mpirun
 else
   LAUNCHER=alps
