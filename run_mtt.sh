@@ -29,6 +29,7 @@ then
     echo "Something went wrong with fetch/build phase"
 else
 #qsub -n 128 -t 160 -A CSC250STPR27 ./run_imb.sh $BRANCH
+rm ompi.$BRANCH.stderr
 jobid=`qsub -n 8 --jobname ompi.$BRANCH -e ompi.$BRANCH.stderr -o ompi.$BRANCH.stdout -q debug-flat-quad -t 60 -A CSC250STPR27 ./run_mtt_backend.sh $BRANCH`
 export QSTAT_HEADER="State"
 nlines=`qstat $jobid | wc -l`
