@@ -6,6 +6,8 @@ module unload cray-libsci
 module unload cray-mpich
 module unload cray-dsmml
 
+env
+sleep 60
 cd $HOME/mtt
 if [ $# -eq 0 ] ; then
   #
@@ -32,5 +34,5 @@ else
         echo "Something went wrong with batch job"
     fi
 fi
-#pyclient/pymtt.py --verbose  iu_reporter_$BRANCH.ini
+pyclient/pymtt.py --verbose  iu_reporter_$BRANCH.ini
 
