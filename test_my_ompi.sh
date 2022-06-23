@@ -7,7 +7,7 @@ module unload cray-mpich
 module unload cray-dsmml
 
 export PATH=/ccs/home/howardp/ompi/install/bin:$PATH
-#export OMPI_MCA_pml=ob1
+export OMPI_MCA_pml=ob1
 export PRTE_MCA_plm=ssh
 export OMPI_MCA_btl=self,sm,ofi
 export PRTE_MCA_plm_ssh_pass_libpath=/opt/cray/pe/gcc/11.2.0/snos/lib/../lib64
