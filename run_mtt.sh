@@ -1,15 +1,9 @@
 #!/bin/bash -l
 
-module load miniconda-3/latest
-module swap craype-mic-knl craype-haswell
-conda init bash
+module load PrgEnv-gnu
+module use --append $HOME/spack/share/spack/modules/cray-sles15-zen3
+module load python-3.9.13-gcc-11.2.0-xn5ccoy
 
-#
-# somethings borked with Intel at the moment
-#
-if $( echo ${LOADEDMODULES} | grep --quiet 'PrgEnv-intel' ); then
-    module swap PrgEnv-intel PrgEnv-gnu
-fi
 
 cd $HOME/mtt
 if [ $# -eq 0 ] ; then
@@ -27,17 +21,19 @@ pyclient/pymtt.py --verbose  get_ompi_$BRANCH.ini
 if [ $? -ne 0 ]
 then
     echo "Something went wrong with fetch/build phase"
+    pyclient/pymtt.py --verbose  iu_reporter_$BRANCH.ini
 else
-#qsub -n 128 -t 160 -A CSC250STPR27 ./run_imb.sh $BRANCH
-rm ompi.$BRANCH.stderr
-jobid=`qsub -n 8 --jobname ompi.$BRANCH -e ompi.$BRANCH.stderr -o ompi.$BRANCH.stdout -q debug-flat-quad -t 60 -A CSC250STPR27 ./run_mtt_backend.sh $BRANCH`
-export QSTAT_HEADER="State"
-nlines=`qstat $jobid | wc -l`
-while [ $nlines != 0 ]
-do
-sleep 120
-nlines=`qstat $jobid | wc -l`
-done
+    rm ompi.$BRANCH.stderr
+    rm ompi.$BRANCH.stdout
+    qsub -Wblock=true -l select=2:ncpus=32:mpiprocs=32:system=polaris -l place=scatter -l walltime=1:00:00 -e ompi.$BRANCH.stderr -o ompi.$BRANCH.stdout -q debug -A CSC250STPR27 -- $PWD/run_mtt_backend.sh $BRANCH
+#   jobid=`qsub -Wblock=true --jobname ompi.$BRANCH -e ompi.$BRANCH.stderr -o ompi.$BRANCH.stdout ./run_mtt_backend.sh $BRANCH`
+#   export QSTAT_HEADER="State"
+#   nlines=`qstat $jobid | wc -l`
+#   while [ $nlines != 0 ]
+#   do
+#       sleep 120
+#       nlines=`qstat $jobid | wc -l`
+#   done
 fi
 pyclient/pymtt.py --verbose  iu_reporter_$BRANCH.ini
 
