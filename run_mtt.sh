@@ -5,6 +5,7 @@ module load PrgEnv-gnu
 module unload cray-libsci
 module unload cray-mpich
 module unload cray-dsmml
+module load rocm
 
 env
 sleep 60
