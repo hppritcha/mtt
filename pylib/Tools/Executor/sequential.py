@@ -17,7 +17,6 @@ import traceback
 import configparser
 import importlib
 import logging
-import imp
 import datetime
 import shlex
 from yapsy.PluginManager import PluginManager
