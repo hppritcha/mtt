@@ -1,8 +1,8 @@
 #!/bin/bash -l
 
-module load PrgEnv-gnu
-module use --append $HOME/spack/share/spack/modules/cray-sles15-zen3
-module load python-3.9.13-gcc-11.2.0-xn5ccoy
+module use --append /soft/packaging/spack/gnu-ldpath/modules/linux-sles15-x86_64 
+module load libevent
+module load hwloc
 
 
 cd $HOME/mtt
@@ -23,9 +23,9 @@ then
     echo "Something went wrong with fetch/build phase"
     pyclient/pymtt.py --verbose  iu_reporter_$BRANCH.ini
 else
-    rm ompi.$BRANCH.stderr
-    rm ompi.$BRANCH.stdout
-    qsub -Wblock=true -l select=2:ncpus=32:mpiprocs=32:system=polaris -l place=scatter -l filesystems=grand:home -l walltime=1:00:00 -e ompi.$BRANCH.stderr -o ompi.$BRANCH.stdout -q debug -A CSC250STPR27 -- $PWD/run_mtt_backend.sh $BRANCH
+    rm -f ompi.$BRANCH.stderr
+    rm -f ompi.$BRANCH.stdout
+    qsub -Wblock=true -l select=2:ncpus=32:mpiprocs=32 -lwalltime=1:00:00 -e ompi.$BRANCH.stderr -o ompi.$BRANCH.stdout -q workq -A CSC250STPR27_CNDA -- $PWD/run_mtt_backend.sh $BRANCH
 #   jobid=`qsub -Wblock=true --jobname ompi.$BRANCH -e ompi.$BRANCH.stderr -o ompi.$BRANCH.stdout ./run_mtt_backend.sh $BRANCH`
 #   export QSTAT_HEADER="State"
 #   nlines=`qstat $jobid | wc -l`

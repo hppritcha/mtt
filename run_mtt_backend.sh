@@ -12,6 +12,7 @@ echo "Hello there"
 module load PrgEnv-gnu
 module use --append $HOME/spack/share/spack/modules/cray-sles15-zen3
 module load python-3.9.13-gcc-11.2.0-xn5ccoy
+module load libevent/2.1.12-gcc-11.2.0-ejszl5p
 
 cd $HOME/mtt
 
