@@ -27,7 +27,8 @@ else
 fi
 SCRATCH_FILE=$BRANCH"_scratch"
 SCRATCH_DIR=/users/hpritchard/mtt/$SCRATCH_FILE
-rm -f -r $SCRATCH_DIR
+rmdir --ignore-fail-on-non-empty $SCRATCH_DIR
+mkdir $SCRATCH_DIR
 export MTT_HOME=$PWD
 echo "============== Testing $BRANCH  ==============="
 pyclient/pymtt.py --verbose  get_ompi_$BRANCH.ini
