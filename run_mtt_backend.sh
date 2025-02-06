@@ -16,6 +16,11 @@ module load libevent/2.1.12-gcc-11.2.0-ejszl5p
 
 cd $HOME/mtt
 
+export FI_CXI_RX_MATCH_MODE=software
+export FI_CXI_DEFAULT_CQ_SIZE=71680
+export FI_CXI_REQ_BUF_SIZE=12582912
+export FI_UNIVERSE_SIZE=4096
+
 if [ $# -eq 0 ] ; then
   BRANCH=master
 else
