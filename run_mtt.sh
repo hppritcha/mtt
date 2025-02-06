@@ -1,8 +1,8 @@
 #!/bin/bash -l
 
-module use --append /soft/packaging/spack/gnu-ldpath/modules/linux-sles15-x86_64 
-module load libevent
-module load hwloc
+#module use --append /soft/packaging/spack/gnu-ldpath/modules/linux-sles15-x86_64 
+#module load libevent
+#module load hwloc
 
 
 cd $HOME/mtt
