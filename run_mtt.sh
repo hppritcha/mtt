@@ -4,6 +4,8 @@
 #module load libevent
 #module load hwloc
 
+python -m venv $HOME/mtt_env
+source $HOME/mtt_env/bin/activate
 
 cd $HOME/mtt
 if [ $# -eq 0 ] ; then
@@ -25,7 +27,7 @@ then
 else
     rm -f ompi.$BRANCH.stderr
     rm -f ompi.$BRANCH.stdout
-    qsub -Wblock=true -l select=2:ncpus=32:mpiprocs=32 -lwalltime=1:00:00 -e ompi.$BRANCH.stderr -o ompi.$BRANCH.stdout -q workq -A CSC250STPR27_CNDA -- $PWD/run_mtt_backend.sh $BRANCH
+    qsub -Wblock=true -l select=2:ncpus=32:mpiprocs=32,filesystems=home -lwalltime=1:00:00 -e ompi.$BRANCH.stderr -o ompi.$BRANCH.stdout -q debug -A OMPI-xpostECP -- $PWD/run_mtt_backend.sh $BRANCH
 #   jobid=`qsub -Wblock=true --jobname ompi.$BRANCH -e ompi.$BRANCH.stderr -o ompi.$BRANCH.stdout ./run_mtt_backend.sh $BRANCH`
 #   export QSTAT_HEADER="State"
 #   nlines=`qstat $jobid | wc -l`
