@@ -20,7 +20,7 @@ import logging
 import imp
 import datetime
 import shlex
-from yapsy.PluginManager import PluginManager
+from pylib.PluginManager import PluginManager
 
 from ExecutorMTTTool import *
 

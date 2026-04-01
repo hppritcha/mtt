@@ -9,7 +9,7 @@
 #
 
 
-from yapsy.IPlugin import IPlugin
+from pylib.PluginManager import IPlugin
 
 class BaseMTTUtility(IPlugin):
     def __init__(self):

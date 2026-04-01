@@ -8,7 +8,7 @@
 # $HEADER$
 #
 
-from yapsy.IPlugin import IPlugin
+from pylib.PluginManager import IPlugin
 
 ## @addtogroup Tools
 # @{

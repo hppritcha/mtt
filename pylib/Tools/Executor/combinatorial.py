@@ -18,7 +18,7 @@ import imp
 import datetime
 import tempfile
 import shutil
-from yapsy.PluginManager import PluginManager
+from pylib.PluginManager import PluginManager
 
 from ExecutorMTTTool import *
 

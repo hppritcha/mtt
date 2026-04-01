@@ -15,7 +15,7 @@ import sys
 import configparser
 import importlib
 import logging
-from yapsy.PluginManager import PluginManager
+from pylib.PluginManager import PluginManager
 import argparse
 import shlex
 

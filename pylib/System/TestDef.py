@@ -18,7 +18,7 @@ import configparser
 import importlib
 import logging
 import imp
-from yapsy.PluginManager import PluginManager
+from pylib.PluginManager import PluginManager
 import datetime
 from distutils.spawn import find_executable
 from threading import Semaphore
@@ -290,7 +290,7 @@ class TestDef(object):
                 sys.exit(1)
 
         # Build plugin managers,
-        # class yapsy.PluginManager.PluginManager(categories_filter=None,
+        # class pylib.PluginManager.PluginManager(categories_filter=None,
         #           directories_list=None, plugin_info_ext=None, plugin_locator=None)
 
         # Build the stages plugin manager

@@ -11,7 +11,7 @@
 #
 
 
-from yapsy.IPlugin import IPlugin
+from pylib.PluginManager import IPlugin
 
 import os
 import shlex
