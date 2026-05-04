@@ -1,6 +1,8 @@
 #!/bin/bash -l
 
-module load python
+#module load python
+#module load python/3.12-26.1.0
+module load python/3.11-24.1.0
 module load PrgEnv-gnu
 module unload cray-libsci
 module unload cray-mpich
