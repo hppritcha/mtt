@@ -1,22 +1,15 @@
 #!/bin/bash -l
 
-module load python/3.11-24.1.0
-module load PrgEnv-gnu
-module unload cray-libsci
-module unload cray-mpich
-module unload cray-dsmml
-module load cudatoolkit
 
-export PRTE_MCA_ras_slurm_use_entire_allocation=1
-export PRTE_MCA_ras_base_launch_orted_on_hn=1
-module load cudatoolkit
+module load rocm/6.4.3
+module load python/3.11.5 
 
 if [ $# -eq 0 ] ; then
   BRANCH=master
 else
   BRANCH=$1
 fi
-cd $HOME/mtt_perlmutter
+cd /usr/WS1/hpp/mtt
 export MTT_HOME=$PWD
 pyclient/pymtt.py --verbose run_ibm_tests_mpirun_$BRANCH.ini
 
