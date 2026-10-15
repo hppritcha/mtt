@@ -12,6 +12,8 @@ module load cudatoolkit
 export PRTE_MCA_ras_slurm_use_entire_allocation=1
 export PRTE_MCA_ras_base_launch_orted_on_hn=1
 module load cudatoolkit
+export LD_LIBRARY_PATH=/opt/cray/libfabric/default/lib64:$LD_LIBRARY_PATH
+
 #
 # hack to workaround monkey business at NERSC
 #
@@ -42,7 +44,8 @@ else
 echo "============== Submitting batch job for Testing $BRANCH  ==============="
 jobid=0
 #jobid=`sbatch --wait --parsable -Am3169 -o slurm.$BRANCH.out -J mtt-$BRANCH -t 6:00:00 -N 1 -C cpu  -q regular ./run_mtt_backend.sh $BRANCH`
-jobid=`sbatch --wait --parsable -Am3169_g -o slurm.$BRANCH.out -J mtt-$BRANCH -t 6:00:00 -N 1 -C gpu --gpus-per-node=4  -q regular ./run_mtt_backend.sh $BRANCH`
+#jobid=`sbatch --wait --parsable -Am3169_g -o slurm.$BRANCH.out -J mtt-$BRANCH -t 6:00:00 -N 1 -C gpu --gpus-per-node=4  -q regular ./run_mtt_backend.sh $BRANCH`
+jobid=`sbatch --wait --parsable -Am3169_g -o slurm.$BRANCH.out -J mtt-$BRANCH -t 0:30:00 -N 1 -C gpu --gpus-per-node=4  -q debug ./run_mtt_backend.sh $BRANCH`
 if [ $jobid -eq 1 ]; then
     echo "Something went wrong with batch job"
 fi
