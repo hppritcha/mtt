@@ -10,6 +10,7 @@ module load cudatoolkit
 export PRTE_MCA_ras_slurm_use_entire_allocation=1
 export PRTE_MCA_ras_base_launch_orted_on_hn=1
 module load cudatoolkit
+export LD_LIBRARY_PATH=/opt/cray/libfabric/default/lib64:$LD_LIBRARY_PATH
 
 if [ $# -eq 0 ] ; then
   BRANCH=master
